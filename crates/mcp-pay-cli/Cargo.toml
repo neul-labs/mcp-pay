@@ -1,0 +1,13 @@
+[package]
+name = "mcp-pay-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+description = "CLI for querying mcp-pay registries (Phase 2)"
+
+[dependencies]
+mcp-pay-schema = { workspace = true }
+
+# Placeholder - will be expanded in Phase 2

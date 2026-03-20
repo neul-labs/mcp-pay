@@ -1,0 +1,304 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mcp-pay.io/schema/v0.1/mcp-pay.schema.json",
+  "title": "MCP-Pay Service Manifest",
+  "description": "Payment awareness manifest for MCP servers. Complements MCP Server Card (SEP-1649) with payment-specific capabilities.",
+  "type": "object",
+  "required": ["mcp_pay", "pricing", "accepts"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "format": "uri",
+      "description": "JSON Schema URL for validation"
+    },
+    "mcp_pay": {
+      "type": "string",
+      "description": "Schema version",
+      "pattern": "^\\d+\\.\\d+$",
+      "examples": ["0.1"]
+    },
+    "server_card": {
+      "type": "string",
+      "description": "Link to MCP Server Card for general metadata",
+      "examples": ["/.well-known/mcp/server-card.json"]
+    },
+    "pricing": {
+      "$ref": "#/$defs/Pricing"
+    },
+    "accepts": {
+      "type": "array",
+      "description": "Accepted payment rails",
+      "items": {
+        "$ref": "#/$defs/PaymentRail"
+      },
+      "minItems": 0
+    },
+    "payment_sla": {
+      "$ref": "#/$defs/PaymentSla"
+    },
+    "stats": {
+      "$ref": "#/$defs/PaymentStats"
+    },
+    "extensions": {
+      "type": "object",
+      "description": "Vendor-specific extensions",
+      "additionalProperties": true
+    }
+  },
+  "$defs": {
+    "Pricing": {
+      "type": "object",
+      "description": "Pricing configuration for tools, resources, and prompts",
+      "properties": {
+        "default": {
+          "$ref": "#/$defs/PricingRule",
+          "description": "Default pricing for all capabilities"
+        },
+        "tools": {
+          "type": "object",
+          "description": "Per-tool pricing overrides",
+          "additionalProperties": {
+            "$ref": "#/$defs/PricingRule"
+          }
+        },
+        "resources": {
+          "type": "object",
+          "description": "Per-resource pricing (supports URI patterns)",
+          "additionalProperties": {
+            "$ref": "#/$defs/PricingRule"
+          }
+        },
+        "prompts": {
+          "type": "object",
+          "description": "Per-prompt pricing overrides",
+          "additionalProperties": {
+            "$ref": "#/$defs/PricingRule"
+          }
+        }
+      }
+    },
+    "PricingRule": {
+      "type": "object",
+      "description": "Pricing rule for a capability",
+      "required": ["model"],
+      "properties": {
+        "model": {
+          "type": "string",
+          "enum": ["free", "per_call", "subscription", "tiered", "metered"],
+          "description": "Pricing model type"
+        },
+        "amount": {
+          "type": "string",
+          "pattern": "^\\d+(\\.\\d+)?$",
+          "description": "Price amount as decimal string",
+          "examples": ["0.003", "10.00"]
+        },
+        "currency": {
+          "type": "string",
+          "description": "Currency code (ISO 4217 or token symbol)",
+          "examples": ["USD", "USDC", "ETH"]
+        },
+        "unit": {
+          "type": "string",
+          "enum": ["call", "request", "token", "byte", "second", "month"],
+          "default": "call",
+          "description": "Billing unit"
+        },
+        "tiers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PricingTier"
+          },
+          "description": "Tiered pricing breakpoints"
+        },
+        "free_quota": {
+          "$ref": "#/$defs/FreeQuota",
+          "description": "Free tier allowance"
+        },
+        "subscription_id": {
+          "type": "string",
+          "description": "Subscription plan identifier"
+        }
+      }
+    },
+    "PricingTier": {
+      "type": "object",
+      "description": "Pricing tier for volume-based pricing",
+      "required": ["up_to", "amount"],
+      "properties": {
+        "up_to": {
+          "oneOf": [
+            { "type": "integer", "minimum": 1 },
+            { "type": "string", "const": "unlimited" }
+          ],
+          "description": "Upper bound for this tier"
+        },
+        "amount": {
+          "type": "string",
+          "pattern": "^\\d+(\\.\\d+)?$",
+          "description": "Price per unit in this tier"
+        }
+      }
+    },
+    "FreeQuota": {
+      "type": "object",
+      "description": "Free tier allowance",
+      "required": ["amount"],
+      "properties": {
+        "amount": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of free units"
+        },
+        "unit": {
+          "type": "string",
+          "enum": ["call", "request", "token", "byte", "second", "month"],
+          "description": "Unit type for the quota"
+        },
+        "period": {
+          "type": "string",
+          "enum": ["hour", "day", "week", "month"],
+          "description": "Reset period"
+        }
+      }
+    },
+    "PaymentRail": {
+      "type": "object",
+      "description": "Payment rail configuration",
+      "required": ["rail"],
+      "properties": {
+        "rail": {
+          "type": "string",
+          "enum": ["x402", "mpp", "lightning", "card", "ach", "custom"],
+          "description": "Payment protocol type"
+        },
+        "network": {
+          "type": "string",
+          "description": "Network identifier (CAIP-2 for chains, or custom network name)",
+          "examples": ["eip155:8453", "solana:mainnet", "tempo", "bitcoin"]
+        },
+        "asset": {
+          "type": "string",
+          "description": "Asset/token for payment",
+          "examples": ["USDC", "USDT", "ETH", "SOL"]
+        },
+        "contract": {
+          "type": "string",
+          "description": "Token contract address (for on-chain assets)"
+        },
+        "pay_to": {
+          "type": "string",
+          "description": "Recipient address/account"
+        },
+        "facilitator": {
+          "type": "string",
+          "format": "uri",
+          "description": "Facilitator endpoint (for x402/MPP)"
+        },
+        "provider": {
+          "type": "string",
+          "description": "Payment provider (for off-chain rails)",
+          "examples": ["stripe", "square", "coinbase"]
+        },
+        "lnurl": {
+          "type": "string",
+          "description": "LNURL for Lightning payments"
+        },
+        "checkout_url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Checkout URL for card payments"
+        },
+        "priority": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 0,
+          "description": "Rail preference (lower = preferred)"
+        }
+      }
+    },
+    "PaymentSla": {
+      "type": "object",
+      "description": "Payment-specific SLA guarantees",
+      "properties": {
+        "settlement_time_seconds": {
+          "type": "object",
+          "description": "Expected settlement time in seconds per rail",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "refund_policy": {
+          "type": "string",
+          "enum": ["no_refunds", "full_refund_on_failure", "pro_rated", "time_limited", "custom"],
+          "description": "Refund policy"
+        },
+        "escrow_available": {
+          "type": "boolean",
+          "description": "Whether escrow is available for payments"
+        },
+        "dispute_contact": {
+          "type": "string",
+          "description": "Contact for payment disputes"
+        },
+        "max_payment_usd": {
+          "type": "string",
+          "pattern": "^\\d+(\\.\\d+)?$",
+          "description": "Maximum payment amount in USD"
+        },
+        "min_payment_usd": {
+          "type": "string",
+          "pattern": "^\\d+(\\.\\d+)?$",
+          "description": "Minimum payment amount in USD"
+        }
+      }
+    },
+    "PaymentStats": {
+      "type": "object",
+      "description": "Payment statistics for discovery and ranking",
+      "properties": {
+        "total_transactions": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total number of completed transactions"
+        },
+        "total_volume_usd": {
+          "type": "string",
+          "pattern": "^\\d+(\\.\\d+)?$",
+          "description": "Total volume processed in USD"
+        },
+        "unique_payers": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of unique paying users/agents"
+        },
+        "avg_settlement_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Average settlement time in milliseconds"
+        },
+        "success_rate": {
+          "type": "string",
+          "pattern": "^\\d+(\\.\\d+)?$",
+          "description": "Payment success rate as percentage string"
+        },
+        "last_updated": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When these stats were last updated"
+        },
+        "transactions_30d": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "30-day rolling transaction count"
+        },
+        "volume_30d_usd": {
+          "type": "string",
+          "pattern": "^\\d+(\\.\\d+)?$",
+          "description": "30-day rolling volume in USD"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,52 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/mcp-pay-schema",
+    "crates/mcp-pay-server",
+    "crates/mcp-pay-cli",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/neul-labs/mcp-pay"
+authors = ["Neul Labs"]
+
+[workspace.dependencies]
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Schema generation/validation
+schemars = "1.0.0-alpha.17"
+jsonschema = "0.29"
+
+# Async runtime
+tokio = { version = "1.45", features = ["full"] }
+
+# HTTP server
+axum = "0.8"
+tower = "0.5"
+tower-http = { version = "0.6", features = ["cors", "trace"] }
+reqwest = { version = "0.12", features = ["json"] }
+
+# MCP SDK
+rmcp = { version = "0.1", features = ["server"] }
+
+# Error handling
+thiserror = "2.0"
+anyhow = "1.0"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Utilities
+async-trait = "0.1"
+base64 = "0.22"
+url = { version = "2.5", features = ["serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+
+# Internal crates
+mcp-pay-schema = { path = "crates/mcp-pay-schema" }
