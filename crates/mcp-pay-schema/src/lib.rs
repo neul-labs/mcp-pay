@@ -64,8 +64,11 @@ pub use validation::{validate_manifest, validate_with_schema, ValidationError};
 /// Current schema version
 pub const SCHEMA_VERSION: &str = "0.1";
 
-/// Schema URL
-pub const SCHEMA_URL: &str = "https://mcp-pay.io/schema/v0.1/mcp-pay.schema.json";
+/// Schema URL (aligned with .well-known/mcp/ namespace per SEP-2127)
+pub const SCHEMA_URL: &str = "https://mcp-pay.io/schema/v0.1/pay.schema.json";
+
+/// Well-known path for the payment manifest
+pub const WELL_KNOWN_PATH: &str = "/.well-known/mcp/pay.json";
 
 #[cfg(test)]
 mod tests {

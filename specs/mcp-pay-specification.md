@@ -3,11 +3,20 @@
 **Version:** 0.1 (Draft)
 **Status:** Proto-SEP for MCP Server Card Working Group
 **Authors:** Neul Labs
-**Date:** September 2025
+**Date:** March 2026
 
 ## Abstract
 
-MCP-Pay extends the Model Context Protocol (MCP) ecosystem with payment awareness. It defines a standardized JSON manifest (`mcp-pay.json`) that MCP servers can expose to declare pricing, accepted payment rails, and payment-specific SLAs. This specification complements SEP-1649 (MCP Server Cards) by adding payment capabilities without duplicating general server metadata.
+MCP-Pay extends the Model Context Protocol (MCP) ecosystem with payment awareness. It defines a standardized JSON manifest (`pay.json`) that MCP servers can expose to declare pricing, accepted payment rails, and payment-specific SLAs. This specification complements SEP-2127 (MCP Server Cards) by adding payment capabilities without duplicating general server metadata.
+
+### Namespace Alignment
+
+This specification uses the `/.well-known/mcp/` namespace being registered with IANA per SEP-2127. The payment manifest lives alongside the server card:
+
+```
+/.well-known/mcp/server-card   ← identity, remotes, capabilities (SEP-2127)
+/.well-known/mcp/pay.json      ← pricing, payment rails, SLA (this spec)
+```
 
 ## Motivation
 
@@ -27,7 +36,7 @@ MCP-Pay bridges this gap by providing a payment-specific manifest that works alo
 The MCP-Pay manifest MUST be served at:
 
 ```
-/.well-known/mcp-pay.json
+/.well-known/mcp/pay.json
 ```
 
 The server MUST:
@@ -118,7 +127,7 @@ At least one of `default`, `tools`, `resources`, or `prompts` MUST be present.
 
 #### 3.1 Discovery
 
-1. Client fetches `/.well-known/mcp-pay.json`
+1. Client fetches `/.well-known/mcp/pay.json`
 2. Client parses pricing for desired tools
 3. Client selects preferred payment rail from `accepts`
 
@@ -155,7 +164,7 @@ When a client calls a paid tool without payment:
 
 ### 4. Relationship to MCP Server Card
 
-MCP-Pay is designed to complement, not replace, SEP-1649:
+MCP-Pay is designed to complement, not replace, SEP-2127:
 
 | MCP Server Card | MCP-Pay |
 |-----------------|---------|
@@ -213,7 +222,7 @@ Servers SHOULD link to their Server Card via the `server_card` field.
 
 ## References
 
-- [SEP-1649: MCP Server Cards](https://github.com/modelcontextprotocol/modelcontextprotocol/issues/1649)
+- [SEP-2127: MCP Server Cards](https://github.com/modelcontextprotocol/modelcontextprotocol/pull/2127)
 - [x402 Protocol Specification](https://github.com/coinbase/x402)
 - [CAIP-2: Blockchain ID Specification](https://github.com/ChainAgnostic/CAIPs/blob/main/CAIPs/caip-2.md)
 - [RFC 8615: Well-Known URIs](https://tools.ietf.org/html/rfc8615)

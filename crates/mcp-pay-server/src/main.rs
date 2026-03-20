@@ -68,7 +68,7 @@ async fn main() -> Result<()> {
         config.http_addr
     );
     tracing::info!(
-        "Payment manifest at http://{}/.well-known/mcp-pay.json",
+        "Payment manifest at http://{}/.well-known/mcp/pay.json",
         config.http_addr
     );
 

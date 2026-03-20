@@ -35,8 +35,8 @@ pub fn create_router(config: Config) -> Router {
         .allow_headers(Any);
 
     Router::new()
-        // Well-known endpoints
-        .route("/.well-known/mcp-pay.json", get(well_known::mcp_pay_json))
+        // Well-known endpoints (aligned with .well-known/mcp/ namespace per SEP-2127)
+        .route("/.well-known/mcp/pay.json", get(well_known::mcp_pay_json))
         // API endpoints (payment-gated)
         .route("/api/weather", get(middleware::weather_current))
         .route("/api/forecast", get(middleware::weather_forecast))

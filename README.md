@@ -43,7 +43,7 @@ cargo run -p mcp-pay-server
 
 ```bash
 # Get payment manifest
-curl http://localhost:3000/.well-known/mcp-pay.json | jq
+curl http://localhost:3000/.well-known/mcp/pay.json | jq
 
 # Get weather (FREE)
 curl "http://localhost:3000/api/weather?city=London" | jq
@@ -71,7 +71,7 @@ mcp-pay/
 
 ## Schema Example
 
-Serve at `/.well-known/mcp-pay.json`:
+Serve at `/.well-known/mcp/pay.json`:
 
 ```json
 {
@@ -183,7 +183,7 @@ Agent                          MCP Server                    Facilitator
 See [specs/mcp-pay-specification.md](specs/mcp-pay-specification.md) for the full specification.
 
 Key design principles:
-- **Complementary**: Works alongside MCP Server Card (SEP-1649)
+- **Complementary**: Works alongside MCP Server Card (SEP-2127)
 - **Rail-agnostic**: Supports multiple payment protocols
 - **Minimal**: Only payment-specific fields, no duplication
 - **Cacheable**: Static manifest, dynamic stats

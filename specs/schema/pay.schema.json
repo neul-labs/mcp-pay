@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://mcp-pay.io/schema/v0.1/mcp-pay.schema.json",
+  "$id": "https://mcp-pay.io/schema/v0.1/pay.schema.json",
   "title": "MCP-Pay Service Manifest",
-  "description": "Payment awareness manifest for MCP servers. Complements MCP Server Card (SEP-1649) with payment-specific capabilities.",
+  "description": "Payment awareness manifest for MCP servers. Complements MCP Server Card (SEP-2127) with payment-specific capabilities. Served at /.well-known/mcp/pay.json",
   "type": "object",
   "required": ["mcp_pay", "pricing", "accepts"],
   "properties": {

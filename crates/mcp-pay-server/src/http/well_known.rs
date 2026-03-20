@@ -61,9 +61,9 @@ pub async fn mcp_pay_json(State(state): State<AppState>) -> Response {
         },
     ];
 
-    // Build manifest
+    // Build manifest (server_card path per SEP-2127)
     let manifest = McpPayManifest::new("0.1", pricing, rails)
-        .with_server_card("/.well-known/mcp/server-card.json")
+        .with_server_card("/.well-known/mcp/server-card")
         .with_sla(PaymentSla::crypto_default())
         .with_stats(
             PaymentStats::with_transactions(0, "0.00", 0)

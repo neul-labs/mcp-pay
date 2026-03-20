@@ -46,7 +46,7 @@ impl McpPayManifest {
     /// Create a new manifest with required fields
     pub fn new(version: impl Into<String>, pricing: Pricing, accepts: Vec<PaymentRail>) -> Self {
         Self {
-            schema: Some("https://mcp-pay.io/schema/v0.1/mcp-pay.schema.json".into()),
+            schema: Some("https://mcp-pay.io/schema/v0.1/pay.schema.json".into()),
             mcp_pay: version.into(),
             server_card: None,
             pricing,
@@ -79,7 +79,7 @@ impl McpPayManifest {
 impl Default for McpPayManifest {
     fn default() -> Self {
         Self {
-            schema: Some("https://mcp-pay.io/schema/v0.1/mcp-pay.schema.json".into()),
+            schema: Some("https://mcp-pay.io/schema/v0.1/pay.schema.json".into()),
             mcp_pay: "0.1".into(),
             server_card: None,
             pricing: Pricing::default(),
