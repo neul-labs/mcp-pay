@@ -5,7 +5,7 @@
 //!
 //! # Overview
 //!
-//! The `mcp-pay.json` manifest is served at `/.well-known/mcp-pay.json` and
+//! The `mcp-pay.json` manifest is served at `/.well-known/mcp/pay.json` and
 //! enables agents to discover:
 //!
 //! - **Pricing**: How much each tool/resource costs
@@ -37,7 +37,7 @@
 //!
 //! # Schema Relationship
 //!
-//! `mcp-pay.json` complements the MCP Server Card (SEP-1649):
+//! `mcp-pay.json` complements the MCP Server Card (SEP-2127):
 //!
 //! - **Server Card**: General metadata (name, capabilities, auth)
 //! - **mcp-pay.json**: Payment-specific information
