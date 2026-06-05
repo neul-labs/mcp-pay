@@ -1,0 +1,56 @@
+site_name: mcp-pay
+site_url: https://mcp-pay.docs.neullabs.com/
+site_description: Payment awareness layer for MCP (Model Context Protocol)
+docs_dir: docs
+site_dir: site
+
+repo_url: https://github.com/neul-labs/mcp-pay
+edit_uri: edit/main/documentation/docs/
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: green
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: green
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - content.action.edit
+    - toc.follow
+
+markdown_extensions:
+  - admonition
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - toc:
+      permalink: true
+
+plugins:
+  - search
+
+nav:
+  - Overview: index.md
+  - Getting Started: getting-started.md
+  - Payment Manifest: payment-manifest.md
+  - MCP Server Integration: mcp-server.md
+  - Payment Flow: payment-flow.md
+  - Payment Rails: payment-rails.md
+  - Specification: specification.md
