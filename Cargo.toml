@@ -9,9 +9,13 @@ members = [
 [workspace.package]
 version = "0.1.0"
 edition = "2024"
-license = "MIT OR Apache-2.0"
+license = "MIT"
 repository = "https://github.com/neul-labs/mcp-pay"
-authors = ["Neul Labs"]
+homepage = "https://mcp-pay.neullabs.com"
+documentation = "https://docs.neullabs.com/mcp-pay"
+authors = ["Neul Labs <contact@neullabs.com>"]
+keywords = ["mcp", "payments", "x402", "lightning", "agents"]
+categories = ["api-bindings", "authentication"]
 
 [workspace.dependencies]
 # Serialization

@@ -2,7 +2,10 @@
 
 **Payment awareness layer for MCP (Model Context Protocol)**
 
-[![License](https://img.shields.io/badge/license-MIT%2FApache--2.0-blue)](LICENSE)
+[![Crates.io](https://img.shields.io/crates/v/mcp-pay-schema)](https://crates.io/crates/mcp-pay-schema)
+[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+
+**Website:** [mcp-pay.neullabs.com](https://mcp-pay.neullabs.com) · **Docs:** [docs.neullabs.com/mcp-pay](https://docs.neullabs.com/mcp-pay) · **Source:** [github.com/neul-labs/mcp-pay](https://github.com/neul-labs/mcp-pay)
 
 mcp-pay extends the MCP ecosystem with payment capabilities. It provides:
 
@@ -197,12 +200,20 @@ Key design principles:
 
 ## License
 
-Licensed under either of:
-- MIT license ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
-- Apache License, Version 2.0 ([LICENSE-APACHE](LICENSE-APACHE) or http://www.apache.org/licenses/LICENSE-2.0)
-
-at your option.
+Licensed under the MIT license ([LICENSE](LICENSE) or https://opensource.org/licenses/MIT).
 
 ## Contributing
 
 Contributions welcome! Please read the specification before submitting PRs.
+
+## Part of the Neul Labs toolchain
+
+Part of the [Neul Labs](https://www.neullabs.com) agent-infrastructure toolchain:
+
+| Project | Description |
+| --- | --- |
+| [agentvfs](https://agentvfs.neullabs.com) | Workspace runtime and execution boundary for AI agents. |
+| [memorg](https://memorg.neullabs.com) | Give your LLM a memory that actually works. |
+| [ormai](https://ormai.neullabs.com) | Give your AI agents database access without the risk — safe text-to-SQL. |
+| [closegate](https://closegate.neullabs.com) | The policy chokepoint for finance AI agents. |
+| [regulus](https://regulus.neullabs.com) | The EU & UK compliance plane for Google ADK. |

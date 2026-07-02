@@ -4,8 +4,12 @@ version.workspace = true
 edition.workspace = true
 license.workspace = true
 repository.workspace = true
+homepage.workspace = true
+documentation.workspace = true
 authors.workspace = true
-description = "Reference MCP server implementation with payment gating"
+keywords.workspace = true
+categories.workspace = true
+description = "Payment awareness layer for MCP: reference server with payment-gated tools"
 
 [dependencies]
 mcp-pay-schema = { workspace = true }
